@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Median Agency</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: black;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Мероприятия Median Agency</h1>
+
+    {% for event in events %}
+        <div class="card">
+            <h2>{{ event.title }}</h2>
+
+            <p><strong>Место:</strong> {{ event.location }}</p>
+            <p><strong>Дата:</strong> {{ event.event_date }}</p>
+
+            <p>{{ event.description }}</p>
+
+            <a class="btn" href="/register/{{ event.id }}/">
+                Зарегистрироваться
+            </a>
+        </div>
+    {% endfor %}
+
+</body>
+</html>
