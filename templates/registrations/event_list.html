@@ -2,50 +2,698 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Median Agency</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Все мероприятия</title>
+
+    <link href="https://fonts.cdnfonts.com/css/mont" rel="stylesheet">
 
     <style>
-        body {
-            font-family: Arial;
-            background: #f4f4f4;
-            padding: 40px;
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
         }
 
-        .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
+        html,
+        body{
+            min-height:100%;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            background: black;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
+        body{
+            font-family:'Mont',sans-serif;
+            background:#ffffff;
+            color:#111111;
+
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
         }
+
+        a{
+            text-decoration:none;
+            color:inherit;
+        }
+
+        .page{
+            min-height:100vh;
+
+            display:flex;
+            flex-direction:column;
+        }
+
+        .header-menu{
+            width:100%;
+            height:80px;
+
+            background:#ffffff;
+
+            border-bottom:1px solid #ececec;
+
+            display:flex;
+            align-items:center;
+
+            position:sticky;
+            top:0;
+
+            z-index:100;
+        }
+
+        .header-inner{
+            width:100%;
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            padding:0 28px;
+        }
+
+        .logo{
+            font-size:23px;
+            font-weight:600;
+
+            letter-spacing:-0.8px;
+        }
+
+        .login-btn{
+            height:42px;
+
+            padding:0 18px;
+
+            border-radius:14px;
+
+            border:1px solid #ececec;
+
+            background:white;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:14px;
+            font-weight:500;
+
+            transition:0.2s;
+        }
+
+        .login-btn:hover{
+            background:#f7f7f7;
+        }
+
+        .wrapper{
+            flex:1;
+
+            background:#f4f5f7;
+
+            padding:16px;
+        }
+
+        .layout{
+            display:flex;
+
+            gap:16px;
+
+            align-items:flex-start;
+        }
+
+        .menu-aside{
+            width:260px;
+
+            background:white;
+
+            border:1px solid #ececec;
+
+            border-radius:24px;
+
+            padding:22px 18px;
+
+            position:sticky;
+            top:96px;
+        }
+
+        .menu-block{
+            display:flex;
+            flex-direction:column;
+
+            gap:8px;
+        }
+
+        .menu-item{
+            height:52px;
+
+            border-radius:16px;
+
+            padding:0 18px;
+
+            display:flex;
+            align-items:center;
+
+            font-size:15px;
+            font-weight:500;
+
+            transition:0.2s;
+        }
+
+        .menu-item.active{
+            background:#111111;
+            color:white;
+        }
+
+        .menu-item:not(.active):hover{
+            background:#f5f5f5;
+        }
+
+        .content-wr{
+            flex:1;
+
+            display:flex;
+        }
+
+        .ticket{
+            background:#ffffff;
+
+            border:1px solid #ececec;
+
+            border-radius:24px;
+
+            width:100%;
+
+            max-width:980px;
+
+            padding:4px 16px 16px;
+
+            display:flex;
+            flex-direction:column;
+
+            min-height:calc(100vh - 112px);
+        }
+
+        .content-block_head{
+            padding:28px 12px 24px;
+        }
+
+        .contacts-title{
+            font-size:52px;
+            line-height:1;
+
+            font-weight:600;
+
+            letter-spacing:-2px;
+        }
+
+        .grid-cards{
+            display:grid;
+
+            grid-template-columns:repeat(2,1fr);
+
+            gap:16px;
+        }
+
+        .item{
+            background:white;
+
+            border:1px solid #ececec;
+
+            border-radius:20px;
+
+            overflow:hidden;
+
+            transition:0.2s;
+        }
+
+        .item:hover{
+            border-color:#d8d8d8;
+        }
+
+        .img{
+            position:relative;
+
+            height:240px;
+
+            overflow:hidden;
+
+            background:#d8d8d8;
+        }
+
+        .img img{
+            width:100%;
+            height:100%;
+
+            object-fit:cover;
+
+            display:block;
+        }
+
+        .date{
+            position:absolute;
+
+            top:14px;
+            left:14px;
+
+            height:34px;
+
+            padding:0 14px;
+
+            border-radius:999px;
+
+            background:rgba(255,255,255,0.96);
+
+            display:flex;
+            align-items:center;
+
+            font-size:13px;
+            font-weight:500;
+
+            z-index:5;
+        }
+
+        .text{
+            padding:18px;
+
+            background:white;
+        }
+
+        .title{
+            font-size:24px;
+
+            line-height:1.1;
+
+            font-weight:600;
+
+            letter-spacing:-0.8px;
+
+            margin-bottom:14px;
+        }
+
+        .location{
+            color:#7b7b7b;
+
+            font-size:14px;
+
+            line-height:1.5;
+
+            margin-bottom:22px;
+
+            font-weight:400;
+        }
+
+        .block{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .status{
+            font-size:14px;
+            font-weight:500;
+        }
+
+        .btn-icon{
+            width:42px;
+            height:42px;
+
+            border-radius:14px;
+
+            background:#111111;
+
+            color:white;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:16px;
+
+            transition:0.2s;
+        }
+
+        .btn-icon:hover{
+            background:#2a2a2a;
+        }
+
+        .footer2{
+            margin-top:auto;
+
+            padding:50px 12px 12px;
+        }
+
+        .footer2-title{
+            font-size:32px;
+
+            line-height:1.05;
+
+            font-weight:600;
+
+            letter-spacing:-1.5px;
+
+            margin-bottom:36px;
+        }
+
+        .footer2-flex{
+            display:flex;
+
+            gap:80px;
+
+            flex-wrap:wrap;
+        }
+
+        .footer2-label{
+            color:#8a8a8a;
+
+            font-size:13px;
+
+            margin-bottom:10px;
+
+            font-weight:500;
+        }
+
+        .footer2-text{
+            font-size:14px;
+
+            line-height:1.8;
+
+            font-weight:400;
+        }
+
+        /* ---------- TABLET ---------- */
+
+        @media(max-width:1100px){
+
+            .grid-cards{
+                grid-template-columns:1fr;
+            }
+
+            .menu-aside{
+                width:220px;
+            }
+
+        }
+
+        /* ---------- MOBILE ---------- */
+
+        @media(max-width:900px){
+
+            .header-menu{
+                height:72px;
+            }
+
+            .header-inner{
+                padding:0 18px;
+            }
+
+            .logo{
+                font-size:20px;
+            }
+
+            .login-btn{
+                height:40px;
+
+                padding:0 14px;
+
+                font-size:13px;
+            }
+
+            .wrapper{
+                padding:10px;
+            }
+
+            .layout{
+                flex-direction:column;
+            }
+
+            .menu-aside{
+                width:100%;
+
+                position:relative;
+                top:auto;
+
+                border-radius:20px;
+
+                padding:14px;
+            }
+
+            .menu-block{
+                flex-direction:row;
+
+                overflow-x:auto;
+
+                scrollbar-width:none;
+            }
+
+            .menu-block::-webkit-scrollbar{
+                display:none;
+            }
+
+            .menu-item{
+                min-width:max-content;
+
+                height:46px;
+
+                font-size:14px;
+
+                border-radius:14px;
+            }
+
+            .ticket{
+                min-height:auto;
+
+                border-radius:20px;
+
+                padding:0 10px 10px;
+            }
+
+            .content-block_head{
+                padding:24px 8px 20px;
+            }
+
+            .contacts-title{
+                font-size:34px;
+
+                letter-spacing:-1.4px;
+            }
+
+            .grid-cards{
+                grid-template-columns:1fr;
+
+                gap:14px;
+            }
+
+            .item{
+                border-radius:18px;
+            }
+
+            .img{
+                height:200px;
+            }
+
+            .text{
+                padding:16px;
+            }
+
+            .title{
+                font-size:21px;
+
+                margin-bottom:12px;
+            }
+
+            .location{
+                font-size:13px;
+
+                margin-bottom:18px;
+            }
+
+            .status{
+                font-size:13px;
+            }
+
+            .btn-icon{
+                width:38px;
+                height:38px;
+
+                border-radius:12px;
+
+                font-size:14px;
+            }
+
+            .footer2{
+                padding:42px 8px 8px;
+            }
+
+            .footer2-title{
+                font-size:26px;
+
+                margin-bottom:26px;
+            }
+
+            .footer2-flex{
+                flex-direction:column;
+
+                gap:24px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 <body>
 
-    <h1>Мероприятия Median Agency</h1>
+<div class="page">
 
-    {% for event in events %}
-        <div class="card">
-            <h2>{{ event.title }}</h2>
+<header class="header-menu">
 
-            <p><strong>Место:</strong> {{ event.location }}</p>
-            <p><strong>Дата:</strong> {{ event.event_date }}</p>
+    <div class="header-inner">
 
-            <p>{{ event.description }}</p>
-
-            <a class="btn" href="/register/{{ event.id }}/">
-                Зарегистрироваться
-            </a>
+        <div class="logo">
+            SOUTH HUB
         </div>
-    {% endfor %}
+
+        <a href="/admin/" class="login-btn">
+            Админ-панель
+        </a>
+
+    </div>
+
+</header>
+
+<div class="wrapper">
+
+    <div class="layout">
+
+        <div class="menu-aside">
+
+            <div class="menu-block">
+
+                <a href="/" class="menu-item active">
+                    Все мероприятия
+                </a>
+
+                <a href="/" class="menu-item">
+                    Конференции
+                </a>
+
+                <a href="/" class="menu-item">
+                    Бизнес-встречи
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="content-wr">
+
+            <div class="ticket">
+
+                <div class="content-block_head">
+
+                    <h1 class="contacts-title">
+                        КЭМПЫ
+                    </h1>
+
+                </div>
+
+                <div class="grid-cards">
+
+                    {% for event in events %}
+
+                    <a href="/register/{{ event.id }}/" class="item">
+
+                        <div class="img">
+
+                            <div class="date">
+                                {{ event.event_date }}
+                            </div>
+
+                            <img src="https://lk.southhub.ru/media/images/Oblozhka_Sou.2e16d0ba.format-webp-original.fill-980x400.webp">
+
+                        </div>
+
+                        <div class="text">
+
+                            <div class="title">
+                                {{ event.title }}
+                            </div>
+
+                            <div class="location">
+                                {{ event.location }}
+                            </div>
+
+                            <div class="block">
+
+                                <div class="status">
+                                    Регистрация открыта
+                                </div>
+
+                                <div class="btn-icon">
+                                    +
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="footer2">
+
+                    <div class="footer2-title">
+                        Для связи </br>
+                        mail@southhub.ru
+                    </div>
+
+                    <div class="footer2-flex">
+
+                        <div>
+
+                            <div class="footer2-label">
+                                Правовая информация
+                            </div>
+
+                            <div class="footer2-text">
+                                ООО «Высокие люди»
+                            </div>
+
+                            <div class="footer2-text">
+                                ИНН 2320134913
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <div class="footer2-label">
+                                Контакты
+                            </div>
+
+                            <div class="footer2-text">
+                                mail@southhub.ru
+                            </div>
+
+                            <div class="footer2-text">
+                                +7 862 29 59 977
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
 
 </body>
 </html>
